@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>BMI Calculator</title>
+        <style>
+			@import url("css/reset.css");
+			@import url("css/style.css");
+		</style>
+    </head>
+    
+    <body>
+        <div id="container">
+            
+            <div id="title">
+            	<h1>Body Mass Index Calculator</h1>
+            </div>
+            
+            <div id="instruction">
+                <p>Enter your height and weight into the appropriate boxes, then click "Calculate BMI" to calculate your Body Mass Index.</p>
+            </div>
+            
+            <div id="content">
+            
+                <div id="calculator">
+                <label for="height">Enter your height:</label> <input type="text" id="height" placeholder="Height"/>
+            <select id="heightunit">
+                <option value="metres" selected="selected">Metres</option>
+                <option value="inches">Inches</option>
+            </select>
+            
+                <label for='weight'>Enter your weight:</label> <input type="text" id="weight" placeholder="Weight"/>
+            <select id="weightunit">
+                <option value="kgs" selected="selected">Kilograms</option>
+                <option value="lbs">Pounds</option>
+            </select>
+            
+            <div id="button">
+            <input type="submit" id="submit" value="Calculate BMI" onClick="calculateBMI()"/>
+            </div>
+            
+            </div>
+                
+            </div>
+            
+            <div id="result">
+                <h1>Your BMI is <span id="output">?</span>. You fall into the <span id="comment">?</span> category.</h1>
+            </div>
+            
+                <script>
+                    function calculateBMI()
+                    {
+                        //Store user input to variables
+                        var height = Number(document.getElementById('height').value); //stores height input by user
+                        var heightunit = document.getElementById('heightunit').value; //stores height unit chosen by user
+                        var weight = Number(document.getElementById('weight').value); //stores weight input by user
+                        var weightunit = document.getElementById('weightunit').value; //stores weight unit chosen by user
+                        
+                        //Convert to metric units
+                        if (heightunit === "inches")
+                        {
+                            height /= 39.3700787;
+                        } //1 metre = 39.3700787 inches
+                        
+                        if (weightunit === "lbs")
+                        {
+                            weight /= 2.20462;
+                        }//1 kilogram = 2.20462 pounds
+                        
+                        //Calculate BMI using variables
+                        //formula is weight / height ^ 2
+                        var BMI = weight / Math.pow(height,2);
+                        
+                        //Display result of calculation
+						
+						//round the result to the nearest hundredth
+                        var output =  Math.round(BMI*100)/100 
+                        document.getElementById("output").innerText = output; //place the BMI result where the "output" span is
+                        if (output < 18.5) //if the BMI result is less than 18.5...
+                        {
+                            document.getElementById("comment").innerText = 'underweight'; //tell the user they are underweight
+                        } else if (output >= 18.5 && output <= 25)//if the BMI result is greater than 18.5 but less than/equal to 25...
+                        {
+                            document.getElementById("comment").innerText = 'normal weight'; //tell the user they are normal weight
+                        } else if (output >= 25 && output <= 30)//if the BMI result is equal to/greater than 25, but less than/equal to 30...
+                        {
+                            document.getElementById("comment").innerText = 'overweight';//tell the user they are overweight
+                        }else if (output > 30)//if the BMI result is greater than 30...
+                        {
+                            document.getElementById("comment").innerText = 'obese';//tell the user they are obese
+                        }
+                        
+                    }
+                    
+                    
+                </script>
+    
+                
+        </div>
+    </body>
+</html>
